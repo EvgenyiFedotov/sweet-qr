@@ -4,8 +4,10 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
+    "build": "webpack -c ./config/webpack/client.js --mode production && webpack -c ./config/webpack/server.js --mode production",
     "build:client": "webpack -c ./config/webpack/client.js",
     "build:server": "webpack -c ./config/webpack/server.js",
+    "start": "node ./dist/server/index.js",
     "start:client": "webpack -c ./config/webpack/client.js --watch",
     "start:server": "webpack -c ./config/webpack/server.js --watch"
   },

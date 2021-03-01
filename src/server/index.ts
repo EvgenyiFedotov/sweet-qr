@@ -3,6 +3,7 @@ import * as http from "http";
 import * as fetch from "node-fetch";
 import * as qrcode from 'qrcode';
 import { v4 as uuid } from "uuid";
+import * as os from "os";
 
 import { getPublicIP } from "./ip";
 import { renderPage } from "./render-page";
@@ -14,7 +15,7 @@ if (!_globalThis.fetch) {
   _globalThis.fetch = fetch;
 }
 
-const port = 5000;
+const port = process.env.PORT || 5000;
 const app = express();
 const server = http.createServer(app);
 
@@ -22,49 +23,12 @@ app.use(express.json());
 app.use(express.static("dist/client"));
 app.get("/favicon.ico", (req, res) => res.sendStatus(404));
 
-// app.get("/create-qr-test", async (req, res) => {
-//   qrcode.toString("I am a pony!", {
-//     type: 'utf8',
-//     // color: {
-//     //   dark: "#00f",
-//     //   light: "#000000"
-//     // }
-//   }, (err, url) => {
-//     console.log(url);
-//     // res.send(url);
-//   });
-
-//   qrcode.toDataURL('I am a pony!', { type: "image/png" }, function (err, url) {
-//     // res.send("created");
-//     // const fullUrl = req.protocol + '://' + req.get('host') + req.originalUrl;
-//     const fullUrl = req.protocol + '://' + req.get('host');
-//     console.log(fullUrl);
-//     // res.send(url);
-//     // res.sendDate(url);
-//   var base64Data = url.replace(/^data:image\/(png|jpeg|jpg);base64,/, '');
-//   var img = Buffer.from(base64Data, 'base64');
-//     res.writeHead(200, {
-//       'Content-Type': 'image/png',
-//       'Content-Length': img.length
-//     });
-//     res.end(img);
-//     // res.end(img);
-//     // res.redirect(fullUrl + "/" + url);
-//   });
-
-//   // res.send("created");
-// });
-
-// app.get("/create-logo", async (req, res) => {
-//   const t =  await qrcode.toFile("logo.png", "Once QR", { type: "png", width: 400, margin: 0 });
-//   console.log(t);
-// });
-
 app.get(paths.createQr(), async (req, res) => {
   const link = req.query.link;
 
   if (typeof link === 'string') {
-    const fullUrl = req.protocol + '://' + getPublicIP() + `:${port}`; // req.get('host'),
+    // const fullUrl = req.protocol + '://' + getPublicIP() + `:${port}`; // req.get('host'),
+    const fullUrl = `${req.protocol}://${req.hostname}`;
     const { uid } = await createQR({ fullUrl, link });
 
     res.writeHead(200, { 'Content-Type': 'application/json' });
