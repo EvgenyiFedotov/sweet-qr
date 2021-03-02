@@ -48,8 +48,13 @@ app.get(paths.getQrImage(), readQR(async ({ qr, res }) => {
 }));
 
 app.get(paths.useQr(), readQR(async ({ req, qr, res }) => {
-  await removeQR(() => {})(req, res);
-  res.redirect(qr.originalLink);
+  if (qr) {
+    await removeQR(() => {})(req, res);
+    res.redirect(qr.originalLink);
+    res.end();
+  }
+
+  res.redirect(paths.page404());
   res.end();
 }));
 
