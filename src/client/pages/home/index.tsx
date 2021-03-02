@@ -1,6 +1,6 @@
 import "./index.css";
 import * as React from "react";
-import { createQr, getQrLink, getQrImage } from "../../../server/paths";
+import { createQr, getQrImage } from "../../../server/paths";
 import logo from "./images/logo.png";
 
 const { useState } = React;

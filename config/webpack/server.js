@@ -3,6 +3,8 @@ const NodemonPlugin = require("nodemon-webpack-plugin");
 const nodeExternals = require("webpack-node-externals");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
+console.log(path.resolve("./src"));
+
 module.exports = {
   entry: "./src/server/index.ts",
   mode: "development",
@@ -25,6 +27,7 @@ module.exports = {
   },
   resolve: {
     extensions: [".tsx", ".ts", ".js"],
+    modules: [path.resolve("./src")],
   },
   target: "node",
   externals: [nodeExternals()],
@@ -36,6 +39,8 @@ module.exports = {
     new MiniCssExtractPlugin(),
     new NodemonPlugin({
       script: "./dist/server/index.js",
+      watch: path.resolve("./dist"),
+      ext: "js,njk,json,ts,tsx",
     }),
   ],
 };
