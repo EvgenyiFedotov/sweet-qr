@@ -61,6 +61,12 @@
   background-color: white;
   outline: none;
   transition: border-color 0.4s;
+  display: flex;
+  flex: none;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  height: 38px;
 }
 
 .home__button-create:focus {
@@ -77,6 +83,11 @@
   flex: none;
   justify-content: center;
   align-items: center;
+  cursor: pointer;
+}
+
+.home__link-qr-wrapper > *:not(:last-child) {
+  margin-right: 8px;
 }
 
 .home__link-qr {
@@ -87,4 +98,9 @@
 
 .home__link-qr:hover {
   text-decoration: underline;
+}
+
+.home__icon {
+  width: 16px;
+  height: 16px;
 }

@@ -20,6 +20,10 @@ app.use(express.json());
 app.use(express.static("dist/client"));
 app.get("/favicon.ico", (req, res) => res.sendStatus(404));
 
+// app.get("/create-logo", async () => {
+//   await qrcode.toFile("logo.png", "https://once-qr.herokuapp.com/", { type: "png", margin: 0, width: 400 });
+// });
+
 app.get(paths.createQr(), createQR(({ res, uid }) => {
   if (uid) {
     res.writeHead(200, { 'Content-Type': 'application/json' });

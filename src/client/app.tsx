@@ -6,12 +6,12 @@ import { PageHome } from "./pages/home";
 
 export const App: React.FC = () => {
   return (
-      <Switch>
-        <Route path="*">
-          <Page>
-            <PageHome />
-          </Page>
-        </Route>
-      </Switch>
+    <Switch>
+      <Route path="*">
+        <Page>
+          <PageHome />
+        </Page>
+      </Route>
+    </Switch>
   );
 };

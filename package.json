@@ -12,6 +12,7 @@
     "start:server": "webpack -c ./config/webpack/server.js --watch"
   },
   "devDependencies": {
+    "@svgr/webpack": "^5.5.0",
     "@types/express": "^4.17.11",
     "@types/node-fetch": "^2.5.8",
     "@types/qrcode": "^1.4.0",
@@ -37,6 +38,7 @@
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-router-dom": "^5.2.0",
+    "react-spinners": "^0.10.6",
     "styled-components": "^5.2.1",
     "uuid": "^8.3.2"
   }

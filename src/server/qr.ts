@@ -4,7 +4,7 @@ import { Request, Response } from "express";
 import * as paths from "./paths";
 import * as qrcode from "qrcode";
 
-type QR = { originalLink: string; link: string };
+type QR = { originalLink: string; link: string, created: number };
 
 type CallbackQR = (payload: { req: Request, res: Response, qr: QR | null, uid: string | null }) => any;
 
@@ -23,7 +23,11 @@ export const createQR: RequestWrapper = (callback) => async (req, res) => {
 
   if (typeof originalLink === "string") {
     uid = uuid();
-    qr = { originalLink, link: `${req.protocol}://${req.hostname}${paths.useQr({ uid })}` };
+    qr = {
+      originalLink,
+      link: `${req.protocol}://${req.hostname}${paths.useQr({ uid })}`,
+      created: new Date().getTime(),
+    };
     write(uid, qr);
   }
 

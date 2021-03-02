@@ -20,6 +20,10 @@ module.exports = {
         use: [MiniCssExtractPlugin.loader, "css-loader"],
       },
       {
+        test: /\.svg$/,
+        use: ["@svgr/webpack", "url-loader"],
+      },
+      {
         test: /\.(png|jpe?g|gif)$/i,
         use: [{ loader: "url-loader" }],
       },
