@@ -58,10 +58,6 @@ app.get(paths.useQr(), readQR(async ({ req, qr, res }) => {
   res.end();
 }));
 
-app.get(paths.page404(), (req, res) => {
-  res.send("404");
-});
-
 app.get(paths.all(), async (req, res) => {
   try {
     res.send(await renderPage({ title: "Once QR",

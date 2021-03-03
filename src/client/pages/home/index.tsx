@@ -5,6 +5,7 @@ import logo from "./images/logo.png";
 import { ReactComponent as Star } from "./images/copy.svg";
 import { ReactComponent as Tick } from "./images/tick.svg";
 import ClipLoader from "react-spinners/ClipLoader";
+import { Page } from "../../ui/templates/page";
 
 const { useState, useEffect } = React;
 
@@ -36,7 +37,7 @@ export const PageHome: React.FC = () => {
   }, [link]);
 
   return (
-    <div className="home__container">
+    <Page>
       <div className="home__name">
         <div>Once</div>
         <div>QR</div>
@@ -86,6 +87,6 @@ export const PageHome: React.FC = () => {
         {visibleTick && <Tick className="home__icon" style={{ fill: "teal" }} />}
         <a className="home__link-qr" href="#">Copy link to QR code</a>
       </div>
-    </div>
+    </Page>
   );
 };
