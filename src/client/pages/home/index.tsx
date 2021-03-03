@@ -6,6 +6,7 @@ import { ReactComponent as Star } from "./images/copy.svg";
 import { ReactComponent as Tick } from "./images/tick.svg";
 import ClipLoader from "react-spinners/ClipLoader";
 import { Page } from "../../ui/templates/page";
+import { Button } from '../../ui/atoms/button';
 
 const { useState, useEffect } = React;
 
@@ -58,8 +59,8 @@ export const PageHome: React.FC = () => {
           }
         }}
       />
-      <button
-        className="home__button-create"
+      <Button
+        loading={visiblePending}
         onClick={() => {
           if (link.trim().length) {
             setPending(true);
@@ -72,9 +73,8 @@ export const PageHome: React.FC = () => {
           }
         }}
       >
-        {!visiblePending && <span>Create</span>}
-        {visiblePending && <ClipLoader size={16} color="teal" />}
-      </button>
+        Create
+      </Button>
       <img className="home__logo" alt="Logo" src={qr} />
       <div
         className="home__link-qr-wrapper"
