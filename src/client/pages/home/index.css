@@ -58,9 +58,10 @@
   border: 3px solid black;
   border-radius: 0;
   box-sizing: border-box;
-  background-color: white;
+  background-color: black;
+  color: white;
   outline: none;
-  transition: border-color 0.4s;
+  transition: border-color background-color 0.4s;
   display: flex;
   flex: none;
   justify-content: center;
@@ -70,8 +71,8 @@
 }
 
 .home__button-create:focus {
-  color: teal;
   border-color: teal;
+  background-color: teal;
 }
 
 .home__link-qr-wrapper {

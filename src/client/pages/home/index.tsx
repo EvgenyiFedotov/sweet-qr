@@ -84,7 +84,7 @@ export const PageHome: React.FC = () => {
       >
         {!visibleTick && <Star className="home__icon" />}
         {visibleTick && <Tick className="home__icon" style={{ fill: "teal" }} />}
-        <a className="home__link-qr" href="#">Copy link to qr code</a>
+        <a className="home__link-qr" href="#">Copy link to QR code</a>
       </div>
     </div>
   );
