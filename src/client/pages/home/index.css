@@ -8,6 +8,31 @@
   font-weight: bold;
 }
 
+.home__about {
+  position: absolute;
+  top: 24px;
+  text-align: justify;
+  background-color: white;
+}
+
+.home__about[data-visible="false"] {
+  display: none;
+}
+
+.home__about span {
+  margin-right: 8px;
+}
+
+.home__about a {
+  font-size: 16px;
+  color: black;
+  font-style: italic;
+}
+
+.home__about > a:hover {
+  text-decoration: underline;
+}
+
 .home__logo {
   width: 300px;
   height: 300px;
