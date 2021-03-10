@@ -1,6 +1,7 @@
 import * as express from 'express';
 import * as http from "http";
 import * as fetch from "node-fetch";
+import * as requestIp from "request-ip";
 
 import { renderPage } from "./render-page";
 import * as paths from "./paths";
@@ -17,12 +18,18 @@ const app = express();
 const server = http.createServer(app);
 
 app.use(express.json());
+app.use(requestIp.mw());
 app.use(express.static("dist/client"));
 app.get("/favicon.ico", (req, res) => res.sendStatus(404));
 
 // app.get("/create-logo", async () => {
 //   await qrcode.toFile("logo.png", "https://once-qr.herokuapp.com/", { type: "png", margin: 0, width: 400 });
 // });
+
+app.use((req, res, next) => {
+  console.log(req.clientIp);
+  next();
+});
 
 app.get(paths.createQr(), createQR(({ res, uid }) => {
   if (uid) {
