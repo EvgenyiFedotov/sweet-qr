@@ -22,6 +22,12 @@ export const remove = (key: string) => {
   writeData();
 };
 
+export const entries = (): [string, any][] => {
+  return Object.entries(data);
+};
+
+
+
 if (fs.existsSync(pathFile)) {
   data = JSON.parse(fs.readFileSync(pathFile).toString());
 } else {

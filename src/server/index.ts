@@ -2,16 +2,26 @@ import * as express from 'express';
 import * as http from "http";
 import * as fetch from "node-fetch";
 import * as requestIp from "request-ip";
+import { CronJob } from "cron";
 
 import { renderPage } from "./render-page";
 import * as paths from "./paths";
-import { createQR, readQR, createQRImagePng, removeQR } from "./qr";
+import { createQR, readQR, createQRImagePng, removeQR, removeOldQR } from "./qr";
+import { createIpFilter } from "./ip-filter";
+import { getMin } from "../lib/time-ms";
 
 const _globalThis: any = globalThis;
 
 if (!_globalThis.fetch) {
   _globalThis.fetch = fetch;
 }
+
+var job = new CronJob('0 0 0 1-31 * *', () => {
+  removeOldQR();
+  console.log('QR clean');
+}, null, true, 'Europe/Moscow');
+
+job.start();
 
 const port = process.env.PORT || 5000;
 const app = express();
@@ -26,11 +36,25 @@ app.get("/favicon.ico", (req, res) => res.sendStatus(404));
 //   await qrcode.toFile("logo.png", "https://once-qr.herokuapp.com/", { type: "png", margin: 0, width: 400 });
 // });
 
-app.use((req, res, next) => {
-  console.log(req.clientIp);
-  next();
+const ipFilters = createIpFilter({
+  sessionLength: getMin(10),
+  countRequests: 100,
 });
 
+const ipFilterMw = (req: express.Request, res: express.Response, next: express.NextFunction) => {
+  try {
+    ipFilters.log(req.clientIp);
+  } catch (error) {
+    res.status(403);
+    res.end();
+    return;
+  }
+
+  console.log(ipFilters.cache);
+  next();
+};
+
+app.get(paths.createQr(), ipFilterMw);
 app.get(paths.createQr(), createQR(({ res, uid }) => {
   if (uid) {
     res.writeHead(200, { 'Content-Type': 'application/json' });

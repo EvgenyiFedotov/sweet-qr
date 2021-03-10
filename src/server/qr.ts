@@ -1,8 +1,9 @@
-import { read, remove, write } from "lib/database";
+import { read, remove, write, entries } from "lib/database";
 import { v4 as uuid } from "uuid";
 import { Request, Response } from "express";
 import * as paths from "./paths";
 import * as qrcode from "qrcode";
+import { getDay } from "../lib/time-ms";
 
 type QR = { originalLink: string; link: string, created: number };
 
@@ -43,4 +44,17 @@ export const removeQR: RequestWrapper = (callback) => async (req, res) => {
   const uid = req.params.uid ?? null;
   remove(uid);
   await callback({ req, res, uid, qr: read(uid) });
-}
+};
+
+const maxDays = getDay(7);
+
+export const removeOldQR = () => {
+  const now = new Date().getTime();
+  const keys: string[] = [];
+
+  entries().forEach(([key, { created }]) => {
+    if (now - created >= maxDays) keys.push(key);
+  });
+
+  keys.forEach(remove);
+};
